@@ -3,7 +3,7 @@ Project:	BAN-AA-01
 Program:	s_dm
 Des:		To generate SDTM DM; 		
 Input:	
-Output:	
+Output:		s_prog.dm.sas, s_prog.dm_spec.sas, s_prog.dm.xls, s_prog.dm_spec.xls
 Programmer:	Ray (Hang Zhong)
 Created:	
 QCer:	
@@ -11,9 +11,10 @@ QC date:	11/15/2012
 LABELs:		
 ********************************************************************************************************************/ 
 
-* macro toolkits; 
-options source2; 
-%include "C:\bancova\projects\prostate\programs\macros\toolkits.sas" /lrecl=1000; 
+* autocall macros; 
+filename autoM "C:\bancova\projects\prostate\programs\macros\toolkits"; 
+options mautolocdisplay mautosource sasautos = (autoM); 
+
 * libname; 
 %include "C:\bancova\projects\prostate\data\sdtm\prog\libname.sas"; 
 
@@ -22,6 +23,12 @@ options source2;
 %let r_dm_spec 	= C:\bancova\projects\prostate\data\sdtm\data\dm_c_spec_1.xls;
 %let s_dm_spec = C:\bancova\projects\prostate\data\sdtm\specs\DM-Spec_1.xls;
 %let ct = C:\bancova\projects\prostate\data\sdtm\specs\CT.xls;
+
+/*******************************************************************************************************************
+*
+* 1. import raw dataset, raw dataset specification, SDTM DM specification, and Controlled Terminology
+*
+********************************************************************************************************************/ 
 
 proc import datafile= "&r_dm."
 	out 	= r_dm
@@ -63,8 +70,8 @@ run;
 
 %ppt(rds); 
 
-
-/*
+/**************************************************************
+Mapping: 
 STUDYID = study			
 DOMAIN 	= DM     * 
 USUBJID = u_subject
@@ -80,7 +87,7 @@ ETHNIC	= ethnic
 ARMCD 	= A (treatment = 1) or P (treatment = 2)
 ARM 	= Drug A (treatment = 1) or Placebo (treatment = 2)
 COUNTRY = location
-*/ 
+***************************************************************/ 
 
 data sds; 
 	set s_dm_spec; 
@@ -89,15 +96,11 @@ run;
 
 %pt(sds); 
 
-* put the variable in the var1 - var15  macro variables. 
-proc sql noprint; 
-proc sql noprint; 
-	select count(*) into :n
-	from sds; 
-
-	select Variable_Name into: var1-:var%left(&n)
-	from sds; 
-quit; 
+/*******************************************************************************************************************
+*
+* 2. check the value in the CT
+*
+********************************************************************************************************************/ 
 
 proc sql; 
 	create table getct as 
@@ -161,7 +164,12 @@ run;
 
 %pt(country); 
 
-* start to convert; 
+/*******************************************************************************************************************
+*
+* 3. convert the raw to SDTM DM
+*
+********************************************************************************************************************/  
+
 data s_prog.dm; 
 	set raw (rename=(ethnic=_ethnic)); 
 	keep 	STUDYID DOMAIN USUBJID SUBJID RFSTDTC RFENDTC 
@@ -206,8 +214,15 @@ data s_prog.dm;
 	else COUNTRY = "AUS"; 
 run; 
 
+/*******************************************************************************************************************
+*
+* 4. print out and export to excel
+*
+********************************************************************************************************************/
+
 %pt(s_prog.dm); 
 
+* output the dm spec; 
 %look(s_prog.dm, dm_spec); 
 
 %pt(dm_spec); 
@@ -218,3 +233,26 @@ run;
 
 proc contents data = s_prog._all_ nods; 
 run; 
+
+data out; 
+	set s_prog.dm; 
+run; 
+
+%ppt(out); 
+
+* sort by USUBJID and then export to export; 
+proc sort data = out; 
+	by USUBJID; 
+run; 
+
+%ppt(out); 
+
+data s_prog.dm; 
+	set out; 
+run; 
+
+%look(out); 
+
+%excel(indsn=out, name=dm, path=C:\bancova\projects\prostate\data\sdtm\prog); 
+
+%excel(indsn=s_prog.dm_spec, name=dm_spec, path=C:\bancova\projects\prostate\data\sdtm\prog); 
