@@ -63,12 +63,14 @@ run;
 
 %pt(raw); 
 
+proc freq data = raw; 
+	table race_group; 
+run; 
+
 data rds; 
 	set r_dm_spec; 
 	drop Obs LENGTH VARNUM FORMAT CODE NOBS NOTE; 
 run; 
-
-%ppt(rds); 
 
 /**************************************************************
 Mapping: 
@@ -164,6 +166,8 @@ run;
 
 %pt(country); 
 
+
+
 /*******************************************************************************************************************
 *
 * 3. convert the raw to SDTM DM
@@ -173,13 +177,13 @@ run;
 data s_prog.dm; 
 	set raw (rename=(ethnic=_ethnic)); 
 	keep 	STUDYID DOMAIN USUBJID SUBJID RFSTDTC RFENDTC 
-			SITEID AGE SEX RACE ETHNIC ARMCD ARM COUNTRY; 
+			SITEID AGE AGEU SEX RACE ETHNIC ARMCD ARM COUNTRY; 
 	attrib STUDYID 	length = $40 	label = "Study Identifier"; 
 	attrib DOMAIN 	length = $8 	label = "Domain Abbreviation"; 
-	attrib USUBJID 	length = $40 	label = "Unique Identifier for the Study"; 
+	attrib USUBJID 	length = $40 	label = "Unique Subject Identifier"; 
 	attrib SUBJID 	length = $40 	label = "Subject Identifier for the Study"; 
 	attrib RFSTDTC 	length = $64 	label = "Subject Reference Start Date"; 
-	attrib RFENDTC 	length = $64 	label = "Subject Rference End Date"; 
+	attrib RFENDTC 	length = $64 	label = "Subject Reference End Date"; 
 	attrib SITEID 	length = $40 	label = "Study Site Identifier"; 
 	attrib AGE 		length = 8		label = "Age";  
 	attrib AGEU 	length = $10 	label = "Age Units"; 
@@ -191,19 +195,76 @@ data s_prog.dm;
 	attrib COUNTRY 	length = $3		label = "Country"; 
 
 * derive SDTM DM variables; 
-	STUDYID = study; 
+	STUDYID = trim(left(study)); 
 	DOMAIN 	= "DM"; 
-	USUBJID = u_subject; 
-	SUBJID 	= subject; 
+	USUBJID = trim(left(u_subject)); 
+	SUBJID 	= trim(left(subject)); 
 	RFSTDTC = put( input( put(start_date, z8.), yymmdd8.), is8601da.); 
 	RFENDTC = put( input( put(end_date, z8.), yymmdd8.), is8601da.); 
-	SITEID 	= site; 
+	SITEID 	= trim(left(put(site, z4.))); 
 	AGE 	= age_year; 
 	AGEU	= "YEARS"; 
 	SEX 	= "M"; 
-	RACE	= upcase(race_group); 
+	if race_group = "Black" then RACE = "BLACK OR AFRICAN AMERICAN"; 
+	else if race_group = "Native Hawaiian or other Pacific Islande" then RACE = "NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER"; 
+	else if race_group = "Asian" then RACE = "ASIAN"; 
+	else if race_group = "White" then RACE = "WHITE"; 
+	else RACE = "AMERICAN INDIAN OR ALASKA NATIVE"; 
+	RACE	= trim(left(upcase(RACE))); 
 	if _ethnic = "Other" then ETHNIC = "UNKNOWN"; 
 	else ETHNIC = upcase(_ethnic); 
+	ETHNIC = trim(left(ETHNIC)); 
+	if TREATMENT = 1 then ARMCD = "A"; 
+	else ARMCD = "P"; 
+	if TREATMENT = 1 then ARM = "Drug A"; 
+	else ARM = "Placebo"; 
+	if location = "Europe" then COUNTRY = "FRA"; 
+	else if location = "USA" then COUNTRY = "USA"; 
+	else if location = "Canada" then COUNTRY = "CAN"; 
+	else COUNTRY = "AUS"; 
+run; 
+
+
+data s_prog.dmt; 
+	set raw (rename=(ethnic=_ethnic)); 
+	keep 	STUDYID DOMAIN USUBJID SUBJID RFSTDTC RFENDTC 
+			SITEID AGE AGEU SEX RACE ETHNIC ARMCD ARM COUNTRY TREATMENT; 
+	attrib STUDYID 	length = $40 	label = "Study Identifier"; 
+	attrib DOMAIN 	length = $8 	label = "Domain Abbreviation"; 
+	attrib USUBJID 	length = $40 	label = "Unique Subject Identifier"; 
+	attrib SUBJID 	length = $40 	label = "Subject Identifier for the Study"; 
+	attrib RFSTDTC 	length = $64 	label = "Subject Reference Start Date"; 
+	attrib RFENDTC 	length = $64 	label = "Subject Reference End Date"; 
+	attrib SITEID 	length = $40 	label = "Study Site Identifier"; 
+	attrib AGE 		length = 8		label = "Age";  
+	attrib AGEU 	length = $10 	label = "Age Units"; 
+	attrib SEX 		length = $2 	label = "Sex"; 
+	attrib RACE 	length = $40	label = "Race"; 
+	attrib ETHNIC 	length = $40	label = "Ethnicity";
+	attrib ARMCD 	length = $20	label = "Planned Arm Code"; 
+	attrib ARM 		length = $40 	label = "Description of Planned Arm"; 
+	attrib COUNTRY 	length = $3		label = "Country"; 
+
+* derive SDTM DM variables; 
+	STUDYID = trim(left(study)); 
+	DOMAIN 	= "DM"; 
+	USUBJID = trim(left(u_subject)); 
+	SUBJID 	= trim(left(subject)); 
+	RFSTDTC = put( input( put(start_date, z8.), yymmdd8.), is8601da.); 
+	RFENDTC = put( input( put(end_date, z8.), yymmdd8.), is8601da.); 
+	SITEID 	= trim(left(put(site, z4.))); 
+	AGE 	= age_year; 
+	AGEU	= "YEARS"; 
+	SEX 	= "M"; 
+	if race_group = "Black" then RACE = "BLACK OR AFRICAN AMERICAN"; 
+	else if race_group = "Native Hawaiian or other Pacific Islande" then RACE = "NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER"; 
+	else if race_group = "Asian" then RACE = "ASIAN"; 
+	else if race_group = "White" then RACE = "WHITE"; 
+	else RACE = "AMERICAN INDIAN OR ALASKA NATIVE"; 
+	RACE	= trim(left(upcase(RACE))); 
+	if _ethnic = "Other" then ETHNIC = "UNKNOWN"; 
+	else ETHNIC = upcase(_ethnic); 
+	ETHNIC = trim(left(ETHNIC)); 
 	if TREATMENT = 1 then ARMCD = "A"; 
 	else ARMCD = "P"; 
 	if TREATMENT = 1 then ARM = "Drug A"; 
@@ -220,39 +281,18 @@ run;
 *
 ********************************************************************************************************************/
 
-%pt(s_prog.dm); 
+%ppt(s_prog.dmt); 
+
+%look(s_prog.dmt); 
 
 * output the dm spec; 
 %look(s_prog.dm, dm_spec); 
 
-%pt(dm_spec); 
+libname dmspec "C:\bancova\projects\prostate\data\sdtm\prog\dm_spec.xls"; 
 
-data s_prog.dm_spec; 
+data dmspec.spec; 
 	set dm_spec; 
 run; 
 
-proc contents data = s_prog._all_ nods; 
-run; 
+libname dmspec clear; 
 
-data out; 
-	set s_prog.dm; 
-run; 
-
-%ppt(out); 
-
-* sort by USUBJID and then export to export; 
-proc sort data = out; 
-	by USUBJID; 
-run; 
-
-%ppt(out); 
-
-data s_prog.dm; 
-	set out; 
-run; 
-
-%look(out); 
-
-%excel(indsn=out, name=dm, path=C:\bancova\projects\prostate\data\sdtm\prog); 
-
-%excel(indsn=s_prog.dm_spec, name=dm_spec, path=C:\bancova\projects\prostate\data\sdtm\prog); 
