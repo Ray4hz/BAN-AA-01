@@ -1,15 +1,14 @@
 /*******************************************************************************************************************
-    Project:	BAN-AA-01
-	Program:	s_dm
-Description:	
-				To generate SDTM DM; 		
-      Input:	
-     Output:	
- Programmer:	Ray (Hang Zhong)
-    Created:	
-	   QCer:	
-	QC date:	11/13/2012
-      LABELs:	update1
+Project:	BAN-AA-01
+Program:	s_dm
+Des:		To generate SDTM DM; 		
+Input:	
+Output:	
+Programmer:	Ray (Hang Zhong)
+Created:	
+QCer:	
+QC date:	11/15/2012
+LABELs:		
 ********************************************************************************************************************/ 
 
 * macro toolkits; 
