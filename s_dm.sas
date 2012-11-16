@@ -2,12 +2,12 @@
 Project:	BAN-AA-01
 Program:	s_dm
 Des:		To generate SDTM DM; 		
-Input:	
+Input:		
 Output:		s_prog.dm.sas, s_prog.dm_spec.sas, s_prog.dm.xls, s_prog.dm_spec.xls
 Programmer:	Ray (Hang Zhong)
 Created:	
 QCer:	
-QC date:	11/15/2012
+QC date:	11/16/2012
 LABELs:		
 ********************************************************************************************************************/ 
 
@@ -19,10 +19,10 @@ options mautolocdisplay mautosource sasautos = (autoM);
 %include "C:\bancova\projects\prostate\data\sdtm\prog\libname.sas"; 
 
 * import demog raw and spec, and sdtm spec; 
-%let r_dm 		= C:\bancova\projects\prostate\data\sdtm\data\dm_c_1.xls; 
+%let r_dm 	= C:\bancova\projects\prostate\data\sdtm\data\dm_c_1.xls; 
 %let r_dm_spec 	= C:\bancova\projects\prostate\data\sdtm\data\dm_c_spec_1.xls;
-%let s_dm_spec = C:\bancova\projects\prostate\data\sdtm\specs\DM-Spec_1.xls;
-%let ct = C:\bancova\projects\prostate\data\sdtm\specs\CT.xls;
+%let s_dm_spec 	= C:\bancova\projects\prostate\data\sdtm\specs\DM-Spec_1.xls;
+%let ct 	= C:\bancova\projects\prostate\data\sdtm\specs\CT.xls;
 
 /*******************************************************************************************************************
 *
@@ -181,14 +181,14 @@ data s_prog.dm;
 	attrib RFSTDTC 	length = $64 	label = "Subject Reference Start Date"; 
 	attrib RFENDTC 	length = $64 	label = "Subject Rference End Date"; 
 	attrib SITEID 	length = $40 	label = "Study Site Identifier"; 
-	attrib AGE 		length = 8		label = "Age";  
+	attrib AGE 	length = 8	label = "Age";  
 	attrib AGEU 	length = $10 	label = "Age Units"; 
-	attrib SEX 		length = $2 	label = "Sex"; 
+	attrib SEX 	length = $2 	label = "Sex"; 
 	attrib RACE 	length = $40	label = "Race"; 
 	attrib ETHNIC 	length = $40	label = "Ethnicity";
 	attrib ARMCD 	length = $20	label = "Planned Arm Code"; 
-	attrib ARM 		length = $40 	label = "Description of Planned Arm"; 
-	attrib COUNTRY 	length = $3		label = "Country"; 
+	attrib ARM 	length = $40 	label = "Description of Planned Arm"; 
+	attrib COUNTRY 	length = $3	label = "Country"; 
 
 * derive SDTM DM variables; 
 	STUDYID = study; 
