@@ -3,7 +3,7 @@ Project:	BAN-AA-01
 Program:	s_dm
 Des:		To generate SDTM DM; 		
 Input:		
-Output:		s_prog.dm.sas, s_prog.dm_spec.sas, s_prog.dm.xls, s_prog.dm_spec.xls
+Output:		s_prog.dm.sas, s_prog.dm_spec.sas, s_prog.dm_spec.xls
 Programmer:	Ray (Hang Zhong)
 Created:	
 QCer:	
