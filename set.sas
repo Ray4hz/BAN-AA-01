@@ -1,16 +1,16 @@
 /*--------------------------------------------------------------*/
-/*				 	Index and Double-set 						*/
+/*	     		Index and Double-set 			*/
 /*--------------------------------------------------------------*/
-/* 	This example is to demonstrate the use of proc datasets 	*/
-/*	(index) and double-set.  									*/
-/*                       										*/
+/* 	This example is to demonstrate the use of proc datasets */
+/*	(index) and double-set.  				*/
+/*                       					*/
 /*--------------------------------------------------------------*/
-/*	The first data set TRANSACTION is a lookup table.			*/
-/*	The second data set MASTER is to get multiple 				*/
-/*	observations per lookup observation.						*/
+/*	The first data set TRANSACTION is a lookup table.	*/
+/*	The second data set MASTER is to get multiple 		*/
+/*	observations per lookup observation.			*/
 /*                                                              */
 /*--------------------------------------------------------------*/
-/*	This program is modifed from Kevin McKinney 				*/
+/*	This program is modifed from Kevin McKinney 		*/
 /*                                                              */
 /*--------------------------------------------------------------*/
 
@@ -56,16 +56,20 @@ proc datasets lib = work;
 	index create ein; 
 run; 
 
-/* 	The dataset in the first set statement(TRANSACTION, lookup)				*/
-/* 	is not a unique list of key values and the dataset in the second 		*/
-/* 	set statement (MASTER) does NOT have a unique set of key values.		*/
-/*	And the KEY (ein) is repeated for observation one, two, and five.		*/ 
-/* 	So this requires resetting the pointer on each iteration of the 		*/
-/* 	data step, and two additional lookups in the MASTER dataset.			*/
-/*	Once to know when the end of all the records for that EIN is reached. 	*/
-/*	Once more to reset the pointer. The auxiliary variables continue and 	*/ 
-/* 	continue1 will create a supplementary condition within the do while 	*/ 
-/*	loop. 																	*/
+/* 	The dataset in the first set statement (TRANSACTION,  	*/
+/*	lookup)	is not a unique list of key values and the 	*/
+/*	dataset in the second set statement (MASTER) does NOT 	*/
+/*	have a unique set of key values.			*/
+/*	And the KEY (ein) is repeated for observation one, two, */
+/*	and five.						*/ 
+/* 	So this requires resetting the pointer on each 		*/
+/*	iteration of the data step, and two additional lookups	*/
+/*	in the MASTER dataset.					*/
+/*	Once to know when the end of all the records for that 	*/
+/*	EIN is reached. 					*/
+/*	Once more to reset the pointer. The auxiliary variables */
+/*	continue and continue1 will create a supplementary 	*/
+/*	condition within the do while loop. 			*/																*/
 
 data out;
 	set TRANSACTION;
@@ -87,8 +91,3 @@ run;
 
 proc print; 
 run; 
-
-
-
-
-
