@@ -11,17 +11,18 @@ Description:
 	QC date:	
       LABELs:	
 ********************************************************************************************************************/ 
-%include "G:\bancova\m5\macro\toolkits.sas"; 
+* autocall macros; 
+filename autoM "C:\bancova\toolkits"; 
+options mautolocdisplay mautosource sasautos = (autoM); 
+* set up the libname; 
 %include "G:\bancova\m5\datasets\BAN-AA-01\tabulations\legacy\program\libname.sas"; 
+
+%let path = G:\bancova\m5\datasets\BAN-AA-01\tabulations\legacy\sasdata; 
 
 * check the output; 
 data dm; 
 	set demog.dm; 
 run; 
-
-* step two; 
-libname toolkits "G:\bancova\m5\macro\toolkits\"; 
-options mstored sasmstore = toolkits; 
 
 %look(dm); 
 
@@ -119,21 +120,28 @@ run;
 %setcat(indsn=pla2, outdsn=pla3, rn=3, varname=RACE, len=40, cat=White|Black|Asian|American Indian or Alaska Native|
 		Other, ncat=368|15|9|1|5); 
 
+* create the birthday for each patient; 
 data d3; 
 	set trt3 pla3; 
-	BIRTHDTC = 2008 - AGE; 
-	format BIRTHDTC yymmddn8.; 
+	BIRTHYEAR = 2008 - AGE; 
+	day = 1 + int(ranuni(888)*29); 
+	month = 1 + int(ranuni(999)*11); 
+	BIRTHDTC = mdy(month, day, BIRTHYEAR); 
+	format birth yymmddn8.; 
+	drop BIRTHYEAR day month; 
 run; 
 
 data demog.dm; 
 	set d3; 
 run; 
 
-%excel(indsn=demog.dm, name=demog); 
+%pt(demog.dm); 
 
+%toexcel(indsn=demog.dm, name=demog, path=&path.); 
 
+* label; 
 data out; 
-	set dm2; 
+	set dm; 
 	format LABEL CODE $40.; 
 	CODE = " "; 
 	if _n_ = 1 then LABEL = "Age"; 
@@ -157,8 +165,6 @@ data out;
 	if _n_ = 18 then LABEL = "Unique subject identifier"; 
 run; 
 
-
-
 data dm; 
 	set demog.dm; 
 run; 
@@ -167,8 +173,9 @@ run;
 
 %look(dm, dm2); 
 
+* rename the dm in order to make it a little bit more difficult for SDTM; 
 data dm_c ; 
-	set dm; 
+	set demog.dm; 
 	rename 	BIRTHDTC = birth
 			AGE = age_year
 			COUNTRY = location
@@ -187,6 +194,8 @@ data dm_c ;
 run; 
 
 %ppt(dm_c); 
+
+%toexcel(indsn=dm_c, name=dm_c, path=&path.); 
 
 %look(dm_c, dm_c1); 
 
@@ -222,9 +231,7 @@ data demog.dm_c_out;
 	set out; 
 run; 
 
-
 %excel(indsn=out, name=Spec_dm_c); 
-
 
 * make a xpt file; 
 data out.dm; 
@@ -244,19 +251,3 @@ proc copy in = tranfile out = back;
 run; 
 
 %ppt(back.dm); 
-
-
-
-filename autoM "G:\bancova\m5\macro\toolkits"; 
-options mautolocdisplay mautosource sasautos = (autoM); 
-
-
-
-
-
-
-
-
-
-
-
