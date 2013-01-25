@@ -1,0 +1,20 @@
+
+* output datasets infor and write label and code; 
+%macro look(indsn, outdsn); 
+proc contents data = &indsn out = tem noprint; 
+	run; 
+data out; 
+	set tem; 
+	format NOTE CODE $40.; 
+	keep NAME TYPE LABEL LENGTH VARNUM FORMAT NOBS NOTE CODE; 
+run; 
+%if %length(&outdsn) = 0 %then %do; 
+	%pt(out); 
+%end; 
+%else %do; 
+	data &outdsn; 
+		set out; 
+	run; 
+	%pt(&outdsn); 
+%end; 
+%mend; 
