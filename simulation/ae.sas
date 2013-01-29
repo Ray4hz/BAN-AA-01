@@ -215,7 +215,7 @@ data ae;
 	drop TREATMENT CENSOR; 
 run; 
 
-%excel(indsn=ae, name=ae); 
+%toexcel(indsn=ae, name=ae, path=C:\bancova\projects\prostate\data\raw\legacy); 
 
 %look(ae, out); 
 
@@ -226,6 +226,7 @@ Study Day of Start of Adverse Event|Reported Term for the Adverse Event|Domain|R
 Subject id|Unique Subject id, ncat=1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1); 
 
 %excel(indsn=output, name=Spec_ae); 
+
 
 
 
