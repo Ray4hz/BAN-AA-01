@@ -51,27 +51,27 @@ options mautolocdisplay mautosource sasautos = (autoM);
 ** format for varaibles; 
 proc format;
 	invalue trtin
-		"Never Treated" 							= 2
-		"Treated"									= 3
-		other										= 99
+		"Never Treated" 						= 2
+		"Treated"							= 3
+		other								= 99
 		; 
 	invalue disin
-		"Treatment Ongoing"							= 1
+		"Treatment Ongoing"						= 1
 		"Treatment Discontinued"					= 2
-		other 										= 99
+		other 								= 99
 		; 
 	invalue reain
 		"Disease Progression"						= 2
-		"Initiation of new anticancer therapy" 		= 3
-		"Adverse event"								= 4 
-		"Withdrawal of consent to treatment" 		= 5
+		"Initiation of new anticancer therapy" 				= 3
+		"Adverse event"							= 4 
+		"Withdrawal of consent to treatment" 				= 5
 		"Investigator discretion" 					= 6
-		"Death"										= 7
-		"Subject choice"							= 8
-		"Administration of prohibited medication"	= 9
+		"Death"								= 7
+		"Subject choice"						= 8
+		"Administration of prohibited medication"			= 9
 		"Dosing noncompliance"						= 10
-		"Other"										= 11
-		other										= 99
+		"Other"								= 11
+		other								= 99
 		; 
 	value trtf
 		1	= 'All Randomized'
@@ -107,43 +107,43 @@ run;
 proc template;
 	define style styles.panda;
 		style titleAndNoteContainer /
-        	outputwidth 		= _undef_;
+        	outputwidth 			= _undef_;
       	style data /
           	foreground 			= black
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
       	style header /
-          	protectspecialchars	= off
+          	protectspecialchars		= off
           	font_face 			= Arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style Table /
           	cellspacing			= 1pt
           	cellpadding			= 2pt
           	frame				= above
           	rules				= groups
-          	borderwidth 		= 1.5pt;
+          	borderwidth 			= 1.5pt;
        	style systemtitle /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style systemfooter /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style column /
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style notecontent;
        	style pageno /
           	foreground 			= white;
        	style SysTitleAndFooterContainer;
        	style body /
-          	bottommargin 		= 1in
+          	bottommargin 			= 1in
           	topmargin 			= 1in
-          	rightmargin 		= _undef_
+          	rightmargin 			= _undef_
           	leftmargin 			= _undef_;
 	end;
 run ;
@@ -656,18 +656,18 @@ options ps=77 ls=100 nonumber orientation=landscape;
 ods rtf file="&oDir\&task._%now(fmt=b8601dt).rtf" style=panda;
 
 proc report data = final nowindows missing headskip headline split="/" 
-												style(header)={just=l}
-												style(column)={cellheight=0.2in }; 	
+										style(header)={just=l}
+										style(column)={cellheight=0.2in }; 	
 	column mypage footnote bottomline listf col1 col2 col3; 
 
-	define mypage		/ order noprint;
+	define mypage	    / order noprint;
 	define footnote	   / order noprint;
-	define bottomline /	order noprint;
+	define bottomline / order noprint;
 
-	define listf		/" " 					style=[asis=on cellwidth=3in];
-	define col1		   /"AA		   / N=&num1"	style=[just=c rightmargin=0.2in cellwidth=1.2in];
-	define col2		  /"Placebo	  / N=&num2" 	style=[just=c rightmargin=0.2in cellwidth=1.2in];
-	define col3		 /"Total     / N=&num3" 	style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define listf		    /" " 					style=[asis=on cellwidth=3in];
+	define col1		   /"AA		   / N=&num1"			style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define col2		  /"Placebo	  / N=&num2" 			style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define col3		 /"Total         / N=&num3" 			style=[just=c rightmargin=0.2in cellwidth=1.2in];
 	
 	compute before; 
 		line " "; 
