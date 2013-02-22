@@ -52,11 +52,11 @@ options mautolocdisplay mautosource sasautos = (autoM);
 ** format for varaibles; 
 proc format;
 	invalue socin
-		"GENERAL MEDICAL HISTOR" 							= 1
-		"RISK FACTORS"										= 2
-		"STROKE HISTORY"									= 3
-		" "													= 99
-		other 												= 100
+		"GENERAL MEDICAL HISTOR" 					= 1
+		"RISK FACTORS"							= 2
+		"STROKE HISTORY"						= 3
+		" "								= 99
+		other 								= 100
 		; 
 	value socf
 		1	= "GENERAL MEDICAL HISTOR" 								
@@ -65,15 +65,15 @@ proc format;
 		other = " "	
 		; 	
 	invalue pttin
-		"ASTHMA"									= 1
-		"BROKEN LEG"								= 2
-		"DIABETES"									= 3
+		"ASTHMA"							= 1
+		"BROKEN LEG"							= 2
+		"DIABETES"							= 3
 		"FREQUENT HEADACHES"						= 4
 		"HYPERCHOLESTEROLEMIA"						= 5
-		"ISCHEMIC STROKE"							= 6
-		"TIA"										= 7
-		" "											= 99
-		other 										= 100
+		"ISCHEMIC STROKE"						= 6
+		"TIA"								= 7
+		" "								= 99
+		other 								= 100
 		; 
 	value pttf
 		1	= "ASTHMA"							
@@ -91,43 +91,43 @@ run;
 proc template;
 	define style styles.panda;
 		style titleAndNoteContainer /
-        	outputwidth 		= _undef_;
+        	outputwidth 			= _undef_;
       	style data /
           	foreground 			= black
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
       	style header /
-          	protectspecialchars	= off
+          	protectspecialchars		= off
           	font_face 			= Arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style Table /
           	cellspacing			= 1pt
           	cellpadding			= 2pt
           	frame				= above
           	rules				= groups
-          	borderwidth 		= 1.5pt;
+          	borderwidth 			= 1.5pt;
        	style systemtitle /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style systemfooter /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style column /
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style notecontent;
        	style pageno /
           	foreground 			= white;
        	style SysTitleAndFooterContainer;
        	style body /
-          	bottommargin 		= 1in
+          	bottommargin 			= 1in
           	topmargin 			= 1in
-          	rightmargin 		= _undef_
+          	rightmargin 			= _undef_
           	leftmargin 			= _undef_;
 	end;
 run ;
@@ -543,22 +543,22 @@ ods rtf file="&oDir\&task._%now(fmt=b8601dt).rtf" style=panda;
 ** Headline tells PROC REPORT to print an underline below the column headers. ; 
 ** Headskip tells PROC REPORT to skip a line after the header.; 
 proc report data = final nowindows missing headline headskip split="|" 
-													style(header)={just=l}
-													style(column)={cellheight=0.2in }; 
+										style(header)={just=l}
+										style(column)={cellheight=0.2in }; 
 	** The COLUMN tells which variables you want to print, and in what order.; 
 	column mypage footnote bottomline soc listf col1 col2 col3; 
 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
-	define soc 		 / order noprint; 
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
+	define soc 		/ order noprint; 
 
 	** Display the values; 
-	define listf		/"System Organ Class/ |    Preferred Term" 	style=[asis=on cellwidth=3in];
-	define col1		   /"AA		 | N=&num1"			style=[just=c rightmargin=0.2in cellwidth=1.2in];
-	define col2		  /"Placebo  | N=&num2" 		style=[just=c rightmargin=0.2in cellwidth=1.2in];
-	define col3		 /"Total     | N=&num3" 		style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define listf		    /"System Organ Class/ |    Preferred Term" 	style=[asis=on cellwidth=3in];
+	define col1		   /"AA	     | N=&num1"				style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define col2		  /"Placebo  | N=&num2" 			style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define col3		 /"Total     | N=&num3" 			style=[just=c rightmargin=0.2in cellwidth=1.2in];
 
 	break after mypage	/	page;	
 
