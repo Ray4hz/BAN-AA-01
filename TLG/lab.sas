@@ -87,43 +87,43 @@ run;
 proc template;
 	define style styles.panda;
 		style titleAndNoteContainer /
-        	outputwidth 		= _undef_;
+        	outputwidth 			= _undef_;
       	style data /
           	foreground 			= black
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
       	style header /
-          	protectspecialchars	= off
+          	protectspecialchars		= off
           	font_face 			= Arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style Table /
           	cellspacing			= 1pt
           	cellpadding			= 2pt
           	frame				= above
           	rules				= groups
-          	borderwidth 		= 1.5pt;
+          	borderwidth 			= 1.5pt;
        	style systemtitle /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style systemfooter /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style column /
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style notecontent;
        	style pageno /
           	foreground 			= white;
        	style SysTitleAndFooterContainer;
        	style body /
-          	bottommargin 		= 1in
+          	bottommargin 			= 1in
           	topmargin 			= 1in
-          	rightmargin 		= _undef_
+          	rightmargin 			= _undef_
           	leftmargin 			= _undef_;
 	end;
 run ;
@@ -131,43 +131,43 @@ run ;
 proc template;
 	define style styles.panda2;
 		style titleAndNoteContainer /
-        	outputwidth 		= _undef_;
+        	outputwidth 			= _undef_;
       	style data /
           	foreground 			= black
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 7pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
       	style header /
-          	protectspecialchars	= off
+          	protectspecialchars		= off
           	font_face 			= Arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 7pt;
        	style Table /
           	cellspacing			= 1pt
           	cellpadding			= 2pt
           	frame				= above
           	rules				= groups
-          	borderwidth 		= 1.5pt;
+          	borderwidth 			= 1.5pt;
        	style systemtitle /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 7pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style systemfooter /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 7pt;
        	style column /
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style notecontent;
        	style pageno /
           	foreground 			= white;
        	style SysTitleAndFooterContainer;
        	style body /
-          	bottommargin 		= 1in
+          	bottommargin 			= 1in
           	topmargin 			= 1in
-          	rightmargin 		= _undef_
+          	rightmargin 			= _undef_
           	leftmargin 			= _undef_;
 	end;
 run ;
@@ -609,24 +609,24 @@ proc report data = final&i. nowindows missing headline headskip split="|"
 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
 
 	** Group to cosolidate observations; 
 	define visit		/ order noprint; 
 
 	** Display the values; 
-	define listf	/"Visit" 																			style=[asis=on];
-	define var1	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} PROTEIN | mg/dL" 		style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var2	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} GLUCOSE | mmol/L"  		style=[just=c rightmargin=0.2in cellwidth=10%];
-	define var3		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} PSA | ng/mL" 			style=[just=c rightmargin=0.2in cellwidth=8%];
+	define listf		/"Visit" 																			style=[asis=on];
+	define var1	    	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} PROTEIN | mg/dL" 		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var2	    	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} GLUCOSE | mmol/L"  		style=[just=c rightmargin=0.2in cellwidth=10%];
+	define var3		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} PSA | ng/mL" 		style=[just=c rightmargin=0.2in cellwidth=8%];
 	define var4		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HEMOGLOBIN | mmol/L"		style=[just=c rightmargin=0.2in cellwidth=10%];
-	define var5		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HCT | 1.0" 				style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var6		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} WBC | 10^12/L"  			style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var7	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} ALT | mckat/L(37C)" 		style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var8	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} AST | kat/L(37C)"		style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var9	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HDL | mmol/L"  			style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var10	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} LDL | mmol/L" 			style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var5		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HCT | 1.0" 			style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var6		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} WBC | 10^12/L"  		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var7	   	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} ALT | mckat/L(37C)" 		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var8	   	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} AST | kat/L(37C)"		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var9	    	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HDL | mmol/L"  		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var10		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} LDL | mmol/L" 		style=[just=c rightmargin=0.2in cellwidth=8%];
 
 	break after mypage	/	page;	
 
@@ -635,11 +635,11 @@ proc report data = final&i. nowindows missing headline headskip split="|"
 	endcomp;
 
 	compute after bottomline /						style={protectspecialchars=off};
-    	line "&span";
-    endcomp;
+    		line "&span";
+    	endcomp;
 
 	compute after footnote;
-     	line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} Notes:   Baseline is defined as the last assessment before the first dose of IP."; 
+     		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} Notes:   Baseline is defined as the last assessment before the first dose of IP."; 
 		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} ^\tab Only patients with baseline and at least one postbaseline assessment are included."; 
 	endcomp;
 run; 
@@ -706,24 +706,24 @@ proc report data = final&i.2 nowindows missing headline headskip split="|"
 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
 
 	** Group to cosolidate observations; 
 	define visit		/ order noprint; 
 
 	** Display the values; 
-	define listf	/"Visit" 																			style=[asis=on];
-	define var1	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} PROTEIN | mg/dL" 		style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var2	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} GLUCOSE | mmol/L"  		style=[just=c rightmargin=0.2in cellwidth=10%];
-	define var3		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} PSA | ng/mL" 			style=[just=c rightmargin=0.2in cellwidth=8%];
+	define listf		/"Visit" 																			style=[asis=on];
+	define var1	    	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} PROTEIN | mg/dL" 		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var2	    	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} GLUCOSE | mmol/L"  		style=[just=c rightmargin=0.2in cellwidth=10%];
+	define var3		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} PSA | ng/mL" 		style=[just=c rightmargin=0.2in cellwidth=8%];
 	define var4		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HEMOGLOBIN | mmol/L"		style=[just=c rightmargin=0.2in cellwidth=10%];
-	define var5		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HCT | 1.0" 				style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var6		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} WBC | 10^12/L"  			style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var7	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} ALT | mckat/L(37C)" 		style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var8	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} AST | kat/L(37C)"		style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var9	    /"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HDL | mmol/L"  			style=[just=c rightmargin=0.2in cellwidth=8%];
-	define var10	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} LDL | mmol/L" 			style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var5		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HCT | 1.0" 			style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var6		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} WBC | 10^12/L"  		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var7	    	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} ALT | mckat/L(37C)" 		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var8	    	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} AST | kat/L(37C)"		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var9	    	/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} HDL | mmol/L"  		style=[just=c rightmargin=0.2in cellwidth=8%];
+	define var10		/"^S={ just=c borderbottomcolor=black borderbottomwidth=2} LDL | mmol/L" 		style=[just=c rightmargin=0.2in cellwidth=8%];
 
 	break after mypage	/	page;	
 
@@ -732,8 +732,8 @@ proc report data = final&i.2 nowindows missing headline headskip split="|"
 	endcomp;
 
 	compute after bottomline /						style={protectspecialchars=off};
-    	line "&span";
-    endcomp;
+    		line "&span";
+    	endcomp;
 
 	compute after footnote;
      	line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} Notes:   Baseline is defined as the last assessment before the first dose of IP."; 
@@ -1069,8 +1069,8 @@ ods rtf file="&oDir\&task._%now(fmt=b8601dt).rtf" style=panda;
 ** Headline tells PROC REPORT to print an underline below the column headers. ; 
 ** Headskip tells PROC REPORT to skip a line after the header.; 
 proc report data = finalshift nowindows missing headline headskip split="|" 
-													style(header)={just=l}
-													style(column)={cellheight=0.2in }; 
+											style(header)={just=l}
+											style(column)={cellheight=0.2in }; 
 	** The COLUMN tells which variables you want to print, and in what order.; 
 	column mypage footnote bottomline visit 
 		("^S={ just=c borderbottomcolor=black borderbottomwidth=2 } Lab Test Prostate Specific Antigen"	
@@ -1080,18 +1080,18 @@ proc report data = finalshift nowindows missing headline headskip split="|"
 		) ; 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
-	define visit 	 / order noprint; 
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
+	define visit 	 	/ order noprint; 
 
 	** Display the values; 
-	define listf	 /"Baseline " 					style=[asis=on cellwidth=1.5in];
-	define c1		 /"Low"							style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define c2		 /"Normal" 						style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define c3		 /"High" 						style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define c4		 /"Low"							style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define c5		 /"Normal" 						style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define c6		 /"High" 						style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define listf	 	/"Baseline " 						style=[asis=on cellwidth=1.5in];
+	define c1		/"Low"							style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define c2		/"Normal" 						style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define c3		/"High" 						style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define c4		/"Low"							style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define c5		/"Normal" 						style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define c6		/"High" 						style=[just=c rightmargin=0.1in cellwidth = 10%];
 
 	break after mypage	/	page;	
 
@@ -1099,7 +1099,7 @@ proc report data = finalshift nowindows missing headline headskip split="|"
 		line " "; 
 	endcomp; 
 
-	compute after bottomline /						style={protectspecialchars=off};
+	compute after bottomline /							style={protectspecialchars=off};
     	line "&span";
     endcomp;
 run; 
