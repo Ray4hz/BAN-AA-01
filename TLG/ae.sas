@@ -52,16 +52,16 @@ options mautolocdisplay mautosource sasautos = (autoM);
 ** format for varaibles; 
 proc format;
 	invalue socin
-		"Cardiac Disorders" 								= 1
+		"Cardiac Disorders" 							= 1
 		"Gastrointestinal Disorders"						= 2
-		"General Disorders"									= 3
+		"General Disorders"							= 3
 		"Infections and Infestations"					 	= 4
-		"Musculoskeletal and Connective Tissue Disorders" 	= 5
+		"Musculoskeletal and Connective Tissue Disorders" 			= 5
 		"Renal and Urinary Disorders"						= 6
-		"Respiratory, Thoracic and Mediastinal Disorders" 	= 7
-		"Vascular Disorders"								= 8
-		" "													= 99
-		other 												= 100
+		"Respiratory, Thoracic and Mediastinal Disorders" 			= 7
+		"Vascular Disorders"							= 8
+		" "									= 99
+		other 									= 100
 		; 
 	value socf
 		1	= "Cardiac Disorders" 								
@@ -75,23 +75,23 @@ proc format;
 		other = " "	
 		; 	
 	invalue pttin
-		"Arrhythmia"								= 1
-		"Treatment Discontinued"					= 2
-		"Cardiac Failure"							= 3
-		"Chest Pain or Chest Discomfort"			= 4
+		"Arrhythmia"									= 1
+		"Treatment Discontinued"							= 2
+		"Cardiac Failure"								= 3
+		"Chest Pain or Chest Discomfort"						= 4
 		"Cough"										= 5
 		"Diarrhea"									= 6
-		"Dysperpsia"								= 7
+		"Dysperpsia"									= 7
 		"Edema"										= 8
 		"Hot Flush"									= 9
-		"Hypertension"								= 10
-		"Joint Swelling/ Discomfort"				= 11
-		"Muscle Discomfort"							= 12
+		"Hypertension"									= 10
+		"Joint Swelling/ Discomfort"							= 11
+		"Muscle Discomfort"								= 12
 		"Nocturia"									= 13
-		"Upper Respiratory Tract Infection"			= 14
-		"Urinary Frequency"							= 15
-		"Urinary Tract Infection"					= 16
-		" "											= 99
+		"Upper Respiratory Tract Infection"						= 14
+		"Urinary Frequency"								= 15
+		"Urinary Tract Infection"							= 16
+		" "										= 99
 		other 										= 100
 		; 
 	value pttf
@@ -117,14 +117,14 @@ proc format;
 		"MILD"		= 1
 		"MODERATE" 	= 2
 		"SEVERE"	= 3
-		" "			= 99
+		" "		= 99
 		other  		= 100
 		; 
 	invalue relin
-		"POSSIBLE"  = 1
+		"POSSIBLE"  	= 1
 		"RELATED"	= 2
 		"UNLIKELY"	= 3
-		" "			= 99
+		" "		= 99
 		other		= 100
 		; 
 
@@ -133,44 +133,44 @@ run;
 ** template for data report;
 proc template;
 	define style styles.panda;
-		style titleAndNoteContainer /
-        	outputwidth 		= _undef_;
+	style titleAndNoteContainer /
+        	outputwidth 			= _undef_;
       	style data /
           	foreground 			= black
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
       	style header /
-          	protectspecialchars	= off
+          	protectspecialchars		= off
           	font_face 			= Arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
-       	style Table /
+       		style Table /
           	cellspacing			= 1pt
           	cellpadding			= 2pt
           	frame				= above
           	rules				= groups
-          	borderwidth 		= 1.5pt;
+          	borderwidth 			= 1.5pt;
        	style systemtitle /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style systemfooter /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style column /
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style notecontent;
        	style pageno /
           	foreground 			= white;
        	style SysTitleAndFooterContainer;
        	style body /
-          	bottommargin 		= 1in
+          	bottommargin 			= 1in
           	topmargin 			= 1in
-          	rightmargin 		= _undef_
+          	rightmargin 			= _undef_
           	leftmargin 			= _undef_;
 	end;
 run ;
@@ -289,7 +289,7 @@ proc sql;
 			after_teae as b
 		on 	a.usubjid = b.usubjid 		and   
 			a.treatment = b.treatment 	and
-			a.soc = b.soc 				and
+			a.soc = b.soc 			and
 			a.ptt = b.ptt
 		order by a.treatment, a.soc, a.ptt, a.usubjid; 
 quit; 
@@ -822,22 +822,22 @@ ods rtf file="&oDir\&task._%now(fmt=b8601dt).rtf" style=panda;
 ** Headline tells PROC REPORT to print an underline below the column headers. ; 
 ** Headskip tells PROC REPORT to skip a line after the header.; 
 proc report data = final nowindows missing headline headskip split="|" 
-													style(header)={just=l}
-													style(column)={cellheight=0.2in }; 
+										style(header)={just=l}
+										style(column)={cellheight=0.2in }; 
 	** The COLUMN tells which variables you want to print, and in what order.; 
 	column mypage footnote bottomline soc listf col1 col2 col3; 
 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
-	define soc 		 / order noprint; 
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
+	define soc 		/ order noprint; 
 
 	** Display the values; 
 	define listf		/"System Organ Class/ |    Preferred Term" 	style=[asis=on cellwidth=3in];
-	define col1		   /"AA		 | N=&num1"			style=[just=c rightmargin=0.2in cellwidth=1.2in];
-	define col2		  /"Placebo  | N=&num2" 		style=[just=c rightmargin=0.2in cellwidth=1.2in];
-	define col3		 /"Total     | N=&num3" 		style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define col1		/"AA	    | N=&num1"				style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define col2		/"Placebo   | N=&num2" 				style=[just=c rightmargin=0.2in cellwidth=1.2in];
+	define col3		/"Total     | N=&num3" 				style=[just=c rightmargin=0.2in cellwidth=1.2in];
 
 	break after mypage	/	page;	
 
@@ -913,18 +913,18 @@ proc report data = final1 nowindows missing headline headskip split="|"
 		("^S={ just=c borderbottomcolor=black }Placebo |^S={ just=c borderbottomcolor=black borderbottomwidth=2}N=&num2." col4 col5 col6); 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
-	define soc 		 / order noprint; 
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
+	define soc 		/ order noprint; 
 
 	** Display the values; 
-	define listf	 /" " 							style=[asis=on cellwidth=3in];
-	define col1		 /"Mild		| n (%)"			style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col2		 /"Moderate	| n (%)" 			style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col3		 /"Severe	| n (%)" 			style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col4		 /"Mild		| n (%)"			style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col5		 /"Moderate	| n (%)" 			style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col6		 /"Severe	| n (%)" 			style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define listf	 	/" " 						style=[asis=on cellwidth=3in];
+	define col1		/"Mild		| n (%)"			style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col2		/"Moderate	| n (%)" 			style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col3		/"Severe	| n (%)" 			style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col4		/"Mild		| n (%)"			style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col5		/"Moderate	| n (%)" 			style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col6		/"Severe	| n (%)" 			style=[just=c rightmargin=0.1in cellwidth = 10%];
 
 	break after mypage	/	page;	
 
@@ -1001,18 +1001,18 @@ proc report data = final2 nowindows missing headline headskip split="|"
 		("^S={ just=c borderbottomcolor=black }Placebo |^S={ just=c borderbottomcolor=black borderbottomwidth=2}N=&num2." col4 col5 col6); 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
-	define soc 		 / order noprint; 
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
+	define soc 		/ order noprint; 
 
 	** Display the values; 
-	define listf	 /" " 							style=[asis=on cellwidth=3in];
-	define col1		 /"None			| n (%)"		style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col2		 /"Possible		| n (%)" 		style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col3		 /"Very likely	| n (%)" 		style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col4		 /"None			| n (%)"		style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col5		 /"Possible		| n (%)" 		style=[just=c rightmargin=0.1in cellwidth = 10%];
-	define col6		 /"Very likely	| n (%)" 		style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define listf	 	/" " 						style=[asis=on cellwidth=3in];
+	define col1		/"None			| n (%)"		style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col2		/"Possible		| n (%)" 		style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col3		/"Very likely		| n (%)" 		style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col4		/"None			| n (%)"		style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col5		/"Possible		| n (%)" 		style=[just=c rightmargin=0.1in cellwidth = 10%];
+	define col6		/"Very likely		| n (%)" 		style=[just=c rightmargin=0.1in cellwidth = 10%];
 
 	break after mypage	/	page;	
 
