@@ -71,8 +71,8 @@ proc format;
 		11	= 4
 		; 
 	value listf
-		1   = "    n"
-		2   = "    Mean (Std Dev)"
+		1   	= "    n"
+		2   	= "    Mean (Std Dev)"
 		3 	= "    Median"
 		4	= "    Minimum, Maximum"
 		; 
@@ -83,43 +83,43 @@ run;
 proc template;
 	define style styles.panda;
 		style titleAndNoteContainer /
-        	outputwidth 		= _undef_;
+        	outputwidth 			= _undef_;
       	style data /
           	foreground 			= black
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
       	style header /
-          	protectspecialchars	= off
+          	protectspecialchars		= off
           	font_face 			= Arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style Table /
           	cellspacing			= 1pt
           	cellpadding			= 2pt
           	frame				= above
           	rules				= groups
-          	borderwidth 		= 1.5pt;
+          	borderwidth 			= 1.5pt;
        	style systemtitle /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style systemfooter /
           	font_face 			= arial
-          	font_weight 		= medium
+          	font_weight 			= medium
           	font_size 			= 10pt;
        	style column /
-          	protectspecialchars	= off;
+          	protectspecialchars		= off;
        	style notecontent;
        	style pageno /
           	foreground 			= white;
        	style SysTitleAndFooterContainer;
        	style body /
-          	bottommargin 		= 1in
+          	bottommargin 			= 1in
           	topmargin 			= 1in
-          	rightmargin 		= _undef_
+          	rightmargin 			= _undef_
           	leftmargin 			= _undef_;
 	end;
 run ;
@@ -494,25 +494,25 @@ ods rtf file="&oDir\&task._%now(fmt=b8601dt).rtf" style=panda;
 ** Headskip tells PROC REPORT to skip a line after the header.; 
 %do i = 1 %to 3; 
 proc report data = final&i. nowindows missing headline headskip split="|" 
-													style(header)={just=l}
-													style(column)={cellheight=0.2in }; 
+										style(header)={just=l}
+										style(column)={cellheight=0.2in }; 
 	** The COLUMN tells which variables you want to print, and in what order.; 
 	column mypage footnote bottomline visit listf ("^S={ just=c borderbottomcolor=black borderbottomwidth=2} %scan(AA/Placebo/Total,&i,/) | N = &&num&i" ("^S={ just=c borderbottomcolor=black borderbottomwidth=2}Blood Pressure (mmHg)" var1 var2) var3 var4); 
 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
 
 	** Group to cosolidate observations; 
 	define visit		/ order noprint; 
 
 	** Display the values; 
 	define listf		/"Visit" 					style=[asis=on cellwidth=2.5in];
-	define var1		   /"Systolic"					style=[just=c rightmargin=0.2in cellwidth=1.4in];
-	define var2		  /"Diastolic" 					style=[just=c rightmargin=0.2in cellwidth=1.4in];
-	define var3		 /"Temperature (ºC)" 			style=[just=c rightmargin=0.2in cellwidth=1.4in];
-	define var4	    /"Pulse Rate (bpm)" 			style=[just=c rightmargin=0.2in cellwidth=1.4in];
+	define var1		/"Systolic"					style=[just=c rightmargin=0.2in cellwidth=1.4in];
+	define var2		/"Diastolic" 					style=[just=c rightmargin=0.2in cellwidth=1.4in];
+	define var3		/"Temperature (ï¿½C)" 				style=[just=c rightmargin=0.2in cellwidth=1.4in];
+	define var4	    	/"Pulse Rate (bpm)" 				style=[just=c rightmargin=0.2in cellwidth=1.4in];
 	
 	break after mypage	/	page;	
 
@@ -521,11 +521,11 @@ proc report data = final&i. nowindows missing headline headskip split="|"
 	endcomp;
 
 	compute after bottomline /						style={protectspecialchars=off};
-    	line "&span";
-    endcomp;
+    		line "&span";
+    	endcomp;
 
 	compute after footnote;
-     	line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} Notes: Only patients with available baseline and postbaseline values are included in the by-visit analysis."; 
+     		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} Notes: Only patients with available baseline and postbaseline values are included in the by-visit analysis."; 
 		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} ^\tab * Visit = Derived."; 
 		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} ^\tab n = Number of patients with available analysis value at both baseline and a specific time point in the Safety Population."; 
 		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} ^\tab Baseline is defined as the last assessment before the first dose of double-blind IP."; 
@@ -586,25 +586,25 @@ ods rtf file="&oDir\&task._%now(fmt=b8601dt).rtf" style=panda;
 ** Headskip tells PROC REPORT to skip a line after the header.; 
 %do i = 1 %to 3; 
 proc report data = final&i.2 nowindows missing headline headskip split="|" 
-													style(header)={just=l}
-													style(column)={cellheight=0.2in }; 
+										style(header)={just=l}
+										style(column)={cellheight=0.2in }; 
 	** The COLUMN tells which variables you want to print, and in what order.; 
 	column mypage footnote bottomline visit listf ("^S={ just=c borderbottomcolor=black borderbottomwidth=2} %scan(AA/Placebo/Total,&i,/) | N = &&num&i" ("^S={ just=c borderbottomcolor=black borderbottomwidth=2}Blood Pressure (mmHg)" var1 var2) var3 var4); 
 
 	** Order to sort the data; 
 	define mypage		/ order noprint;
-	define footnote	   / order noprint;
-	define bottomline /	order noprint;
+	define footnote	   	/ order noprint;
+	define bottomline 	/ order noprint;
 
 	** Group to cosolidate observations; 
 	define visit		/ order noprint; 
 
 	** Display the values; 
 	define listf		/"Visit" 					style=[asis=on cellwidth=2.5in];
-	define var1		   /"Systolic"					style=[just=c rightmargin=0.2in cellwidth=1.4in];
-	define var2		  /"Diastolic" 					style=[just=c rightmargin=0.2in cellwidth=1.4in];
-	define var3		 /"Temperature (ºC)" 			style=[just=c rightmargin=0.2in cellwidth=1.4in];
-	define var4	    /"Pulse Rate (bpm)" 			style=[just=c rightmargin=0.2in cellwidth=1.4in];
+	define var1		/"Systolic"					style=[just=c rightmargin=0.2in cellwidth=1.4in];
+	define var2		/"Diastolic" 					style=[just=c rightmargin=0.2in cellwidth=1.4in];
+	define var3		/"Temperature (ï¿½C)" 				style=[just=c rightmargin=0.2in cellwidth=1.4in];
+	define var4	    	/"Pulse Rate (bpm)" 				style=[just=c rightmargin=0.2in cellwidth=1.4in];
 	
 	break after mypage	/	page;	
 
@@ -613,11 +613,11 @@ proc report data = final&i.2 nowindows missing headline headskip split="|"
 	endcomp;
 
 	compute after bottomline /						style={protectspecialchars=off};
-    	line "&span";
-    endcomp;
+    		line "&span";
+    	endcomp;
 
 	compute after footnote;
-     	line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} Notes: Only patients with available baseline and postbaseline values are included in the by-visit analysis."; 
+     		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} Notes: Only patients with available baseline and postbaseline values are included in the by-visit analysis."; 
 		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} ^\tab * Visit = Derived."; 
 		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} ^\tab n = Number of patients with available analysis value at both baseline and a specific time point in the Safety Population."; 
 		line "^S={font_size=8pt just=l leftmargin=0.1in font_face=arial} ^\tab Baseline is defined as the last assessment before the first dose of double-blind IP."; 
