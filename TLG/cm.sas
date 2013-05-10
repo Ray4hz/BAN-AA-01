@@ -125,20 +125,20 @@ run ;
 *--------------------------------------------*;
 ** import ae data into rawae; 
 proc import 	datafile = "&dDir\conmed\conmed.xls"
-				out 	 = rawcm
-				dbms 	 = xls replace; 
-	sheet 		= "cm";
-	getnames 	= yes;  
+		out 	 = rawcm
+		dbms 	 = xls replace; 
+	        sheet 	 = "cm";
+	        getnames = yes;  
 run;  
 
 %ppt(rawcm); 
 
 ** import demog data for itt index; 
 proc import 	datafile = "&dDir\demog\demog.xls"
-				out 	 = rawdm
-				dbms 	 = xls replace; 
-	sheet 		= "demog";
-	getnames 	= yes;  
+	        out 	 = rawdm
+	        dbms 	 = xls replace; 
+	        sheet 	 = "demog";
+	        getnames = yes;  
 run; 
 
 %ppt(rawdm); 
